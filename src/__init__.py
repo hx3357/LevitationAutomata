@@ -19,7 +19,7 @@ from .config import (
     load_config,
     save_config,
 )
-from .commands import CommandRegistry, _registry, execute_command, parse_command
+from .commands.commands import CommandRegistry, _registry, execute_command, parse_command
 from .filters import FilterOutput, FilterResult, apply_filters
 from .throttled_wechat import ThrottledWeChat
 from .wechat_worker import WeChatWorker, WorkerStats

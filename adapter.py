@@ -41,7 +41,7 @@ from agent_tools import (
 from background_process import BackgroundProcessManager
 from background_registry import register_all
 from config import WxAutoConfig, load_config
-from commands import _registry as command_registry
+from commands.commands import _registry as command_registry
 from data_manager import DataWorker, PyWxDumpParser
 from data_manager.time_utils import resolve_timezone
 from directives import Directive, Text, has_directive_syntax, parse

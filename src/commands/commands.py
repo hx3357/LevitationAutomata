@@ -195,7 +195,6 @@ def execute_command(
 # ── 内置命令处理函数 ──────────────────────────────────────────────────────────
 
 def _handle_help(parsed: dict, raw: dict, cfg) -> str:
-    from commands import _registry  # noqa: PLC0415 — 延迟导入避免循环
     lines = ["*可用命令：*"]
     for name, spec in sorted(_registry.all_commands().items()):
         prefix = "🔐 " if spec["admin"] else "   "

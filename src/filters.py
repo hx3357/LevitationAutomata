@@ -17,7 +17,7 @@ from enum import Enum, auto
 from typing import Optional
 
 from config import WxAutoConfig
-from commands import CommandRegistry, execute_command
+from commands.commands import CommandRegistry, execute_command
 
 logger = logging.getLogger(__name__)
 
