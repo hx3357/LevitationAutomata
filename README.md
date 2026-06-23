@@ -1,4 +1,21 @@
-# wx-auto-platform
+# Levitation Automata
+
+**Levitation Automata** 是一个面向群聊场景的拟真人 Agent 框架。它的目标不是构建一个随叫随到的群聊助手，而是模拟一个拥有“灵魂”、记忆、兴趣、欲望和自我连续性的虚拟个体：它会旁观、沉默、被话题吸引、对熟悉的人产生不同反应，也会在合适的时候主动参与对话或发起话题。它不是为了完成用户任务而存在，而是作为群聊中的一个社会性角色持续生活。✨
+
+项目的核心思想是：**让 Agent 的行为从人格、记忆、想法和欲望中自然涌现，而不是用固定规则硬编码状态。** 每一帧中，Agent 会读取新的群聊信息，更新自己对事件、用户和群体氛围的记忆，生成内部想法与反思，再根据当前被触发的欲望、注意力和社交牵引决定是否发言、如何发言，或继续保持沉默。
+
+Levitation Automata 采用六层心智架构：
+
+**Data Layer** 记录群聊中客观发生的消息、引用、时间、说话者和线程信息。
+**Memory Layer** 保存 Agent 经历过的事件、自我历史、用户画像、关系网络和群体记忆。
+**Thought Layer** 负责感知、理解、反思和规划，将原始事件转化为 Agent 的内部想法。
+**Persona Layer** 定义 Agent 通常是什么样的人，包括 soul prompt、性格、兴趣、价值观、表达风格和长期欲望。
+**Desire Layer** 表示 Agent 此刻被什么牵引，例如兴趣、社交回应、被关注感、未完成计划或表达冲动。
+**Action Layer** 根据当前心智状态决定沉默、回复、主动发起话题或进入hermes agent loop。
+
+## wx-auto-platform
+
+对于Levi的开发框架和数据层，使用基于hermes agent的wx-auto-platform来实现并扩展功能。**本仓库仅为项目的wx-auto-platform部分。**未来考虑放弃hermes，自行开发harness agent loop作为慢agent行动路径。
 
 `wx-auto-platform` 是一个仅支持 Windows 的 [Hermes](https://github.com/NousResearch/hermes-agent) 平台插件。它通过 WeChat Desktop 的 COM/UIAutomation 接口，把微信私聊和群聊接入 Hermes Agent，同时提供消息过滤、管理员命令、文件发送、本地聊天事实库和历史消息查询能力。
 
@@ -6,7 +23,7 @@
 微信用户 ↔ 微信桌面端 ↔ wx-auto-platform ↔ Hermes Gateway ↔ Agent
 ```
 
-## 功能
+### 功能
 
 - 接收微信私聊和群聊消息，并转换为 Hermes `MessageEvent`
 - 通过聊天表限制监听范围，支持发送人黑名单
@@ -17,21 +34,21 @@
 - 使用最近消息 ID 滑动窗口避免重复投递
 - 内置普通命令与基于“管理员名单 + TOTP”的管理命令
 - 将实时消息持久化到 SQLite 本地事实库
-- 可选启用 PyWxDump（仓库未提供），补充微信数据库中的离线消息和媒体文件
+- 可选启用数据库解析（仓库未提供），补充微信数据库中的离线消息和媒体文件
 - 可选按安全时间窗对账在线捕获与微信数据库记录
 - 向 Agent 注册当前会话的精确时间范围和最近历史消息查询工具
 - 可随适配器生命周期守护附加后台进程，目前支持可选的 Camofox Browser
 - 支持 Hermes cron 独立连接并向默认微信聊天投递消息
 
-## 运行要求
+### 运行要求
 
 - Windows 10/11 Only
-- Python 3.10 或更高版本
+- Python 3.10-3.13
 - 微信桌面端 3.9.x，已登录并可正常打开目标聊天
 - 已安装并可运行 Hermes
 - 目标聊天名称在微信中可被准确识别
 
-## 安装
+### 安装
 
 将仓库放入 Hermes 插件目录：
 
@@ -113,7 +130,7 @@ $env:WX_AUTO_ENABLED = "true"
 
 不要提交包含个人聊天名称、路径或敏感配置的 `config.yaml`。
 
-## 环境变量
+### 环境变量
 
 | 变量 | 说明 |
 |---|---|
@@ -128,9 +145,9 @@ $env:WX_AUTO_ENABLED = "true"
 
 推荐通过 Hermes 的环境配置或系统环境变量注入密钥，不要把 TOTP 密钥和微信数据库密钥写入仓库。
 
-## 使用方法
+### 使用方法
 
-### 接收消息
+#### 接收消息
 
 插件连接后会为 `chat_table` 中的聊天调用 `AddListenChat`，并按 `poll_interval` 轮询新消息。
 
@@ -145,7 +162,7 @@ $env:WX_AUTO_ENABLED = "true"
 
 因此，黑名单消息和命令可以保留在本地事实库中，但不会作为普通对话交给 Agent。
 
-### 发送文本和文件
+#### 发送文本和文件
 
 普通 Agent 回复会作为微信纯文本发送。Markdown 标题、粗体、链接等格式会被转换为更适合微信气泡的纯文本。
 
@@ -158,7 +175,7 @@ $env:WX_AUTO_ENABLED = "true"
 
 路径必须指向本机已存在的文件。插件会按文本段和文件指令的顺序依次发送。微信单条文本的 Hermes 平台上限为 4000 字符。
 
-### 微信命令
+#### 微信命令
 
 | 命令 | 权限 | 说明 |
 |---|---|---|
@@ -183,7 +200,7 @@ $env:WX_AUTO_ENABLED = "true"
 
 微信群成员可能修改显示名，因此管理员名单不能单独作为可靠身份认证。请通过私密渠道分发 TOTP 密钥。
 
-## 本地聊天事实库
+### 本地聊天事实库
 
 DataManager 默认启用，数据库默认位于：
 
@@ -209,7 +226,7 @@ data_manager:
 
 更完整的数据模型与对账设计见 [docs/data_manager.md](docs/data_manager.md)。
 
-## 可选：微信数据库补账与对账
+### 可选：微信数据库补账与对账
 
 实时 UIAutomation 可能因 Hermes 停机、微信窗口状态或界面变化漏掉消息。PyWxDump 解析器可以读取微信本地数据库，将离线记录补充到事实库。
 
@@ -237,12 +254,12 @@ python scripts/smoke_pywxdump_parser.py `
 
 确认解析结果正常后，再按需启用 `data_manager.reconciliation.enabled`。对账会在重叠安全时间窗内匹配在线记录与数据库记录，以数据库时间和结构化字段校正在线推断；歧义记录会被保留，不会通过整段删除重建来“强行一致”。
 
-## 技术架构
+### 技术架构
 
 ```mermaid
 flowchart LR
     User[微信用户] <--> WeChat[WeChat Desktop 3.9.x]
-    WeChat <--> WX[Vendored wxauto<br/>COM / UIAutomation]
+    WeChat <--> WX[UIAutomation]
     WX <--> Worker[WeChatWorker<br/>单线程 COM 队列]
     Worker <--> Adapter[WxautoPlatformAdapter<br/>async Hermes adapter]
     Adapter <--> Gateway[Hermes Gateway]
@@ -251,101 +268,10 @@ flowchart LR
     Adapter --> Filter[过滤器与命令系统]
     Adapter --> DataWorker[DataWorker<br/>单线程 executor]
     DataWorker <--> SQLite[(SQLite 事实库)]
-    DataWorker -.可选.-> PyWxDump[PyWxDump<br/>离线数据库解析]
+    DataWorker -.可选.-> PyTxSbDump[PyTxSbDump<br/>离线数据库解析]
     Agent -.当前会话历史工具.-> DataWorker
     Adapter -.生命周期管理.-> Processes[后台进程管理器]
 ```
-
-### 入站数据流
-
-```text
-GetListenMessage
-    → 消息 ID 去重
-    → DataManager.ingest_online
-    → 黑名单 / 聊天表 / 命令过滤
-    → MessageEvent
-    → Hermes Gateway
-    → Agent
-```
-
-### 出站数据流
-
-```text
-Agent 回复
-    → 文本 / <file/> 指令解析
-    → Markdown 清理
-    → WeChatWorker.submit
-    → ThrottledWeChat
-    → SendMsg / SendFiles
-```
-
-### 线程模型
-
-- Hermes adapter、轮询和生命周期管理运行在 asyncio 事件循环。
-- `WeChatWorker` 持有唯一 `ThrottledWeChat` 实例，并在同一个已 `CoInitialize` 的线程中串行执行全部 COM/UIAutomation 调用。
-- `DataWorker` 使用独立的单线程 executor 串行执行 SQLite、数据库解密和解析操作。
-- `ThrottledWeChat` 保持同步 API，并在最外层发送 RPC 前执行随机阻塞延迟；该阻塞只发生在 COM worker 线程。
-
-这种设计同时满足 COM 线程亲和性和 Hermes 的异步非阻塞要求。
-
-## 项目结构
-
-```text
-.
-├── adapter.py                  # Hermes 插件入口与平台适配器
-├── PLUGIN.yaml                 # 插件元数据和环境变量声明
-├── config.example.yaml         # 配置模板
-├── src/
-│   ├── config.py               # 配置加载、查询和持久化
-│   ├── filters.py              # 入站消息过滤管线
-│   ├── commands.py             # slash 命令、TOTP 和防重放
-│   ├── directives.py           # <file/> 指令解析
-│   ├── wechat_worker.py        # 单线程 COM/asyncio 桥接
-│   ├── throttled_wechat.py     # wxauto 发送节流扩展
-│   ├── background_*.py         # 后台进程注册与生命周期
-│   ├── agent_tools/            # 当前会话历史查询工具
-│   ├── data_manager/           # SQLite、离线解析与对账
-│   └── wxauto_plugin/          # vendored 第三方代码，请勿直接修改
-├── scripts/                    # 运维与冒烟测试工具
-├── tests/                      # DataManager/Agent 工具测试
-└── docs/                       # 设计和运维文档
-```
-
-## 开发与验证
-
-安装额外的开发检查工具：
-
-```powershell
-python -m pip install pyright tenacity
-```
-
-然后运行：
-
-```powershell
-python -m compileall adapter.py src scripts
-pyright
-python -m unittest discover -s tests -p "test_*.py"
-```
-
-完整运行验证需要 Windows、微信 3.9.x 和 Hermes。修改适配器后重启 Hermes，并使用非关键微信账号检查：
-
-- 插件连接和断开
-- 私聊与群聊接收
-- 聊天表、黑名单和管理员鉴权
-- 文本与文件发送
-- DataManager 写入和历史查询
-- PyWxDump 补账与对账（如启用）
-- Hermes 关闭时 worker、数据库和后台进程是否干净退出
-
-## 已知限制
-
-- 仅支持 Windows 和微信桌面端 3.9.x。
-- UIAutomation 易受微信界面和版本变化影响。
-- 微信不提供原生发送消息 ID，插件使用本地 UUID 供 Hermes 追踪。
-- 微信没有适配器可用的输入状态 API，`send_typing` 是空操作。
-- 回复引用 `reply_to` 不能映射为微信原生引用回复。
-- 动画表情等部分媒体只能保存为占位文本。
-- 当前只支持单个微信客户端实例和单账号工作流。
 
 ## 进一步阅读
 
