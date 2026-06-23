@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+
+# DataManager 运行时数据库及 WAL/SHM 文件
+data/
+test-output/
+
+# DMCA Take Down made by Tencent
+src/data_manager/pywxdump
+scripts/dorobou
+
+config.yaml

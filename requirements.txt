@@ -1,0 +1,31 @@
+# wxauto
+comtypes
+colorama
+Pillow
+psutil
+pyperclip
+pywin32
+tenacity
+
+# wxdump
+setuptools
+wheel
+pycryptodomex
+silk-python
+pyaudio
+requests
+pyahocorasick
+lz4
+blackboxprotobuf
+lxml
+dbutils
+pymem
+pydantic>=2.7,<3
+fastapi
+uvicorn
+python-dotenv
+
+# 项目依赖
+PyYAML
+pyotp
+tzdata

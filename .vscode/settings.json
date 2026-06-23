@@ -1,0 +1,15 @@
+{
+  // Use the hermes-agent repo's virtualenv (hermes-agent is installed editable
+  // there, so its pinned deps + the `gateway` package are available).
+  "python.defaultInterpreterPath": "F:/Projects/hermes-agent/.venv/Scripts/python.exe",
+
+  // The repo uses a setuptools *finder-based* editable install
+  // (__editable___hermes_agent_..._finder.py). Pylance does NOT execute that
+  // finder, so it can't see `gateway` from the interpreter alone. Point the
+  // analyzer at the repo root (which is the import root) so `import gateway`,
+  // `from gateway.platforms.base import ...`, etc. resolve in the editor.
+  "python.analysis.extraPaths": ["F:/Projects/hermes-agent"],
+
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.typeCheckingMode": "basic"
+}

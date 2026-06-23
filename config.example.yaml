@@ -1,0 +1,63 @@
+# wx-auto 平台配置模板
+# 将此文件复制为 config.yaml 并按实际情况填写。
+# totp_secret 建议通过 WX_AUTO_ADMIN_TOTP_SECRET 环境变量注入，避免明文留在文件里。
+
+# 聊天表 — 只有在此表中的聊天，消息才会进入数据流
+# type 可选值：group（群聊）| friend（私聊）| self（自己，如"文件传输助手"）
+chat_table:
+  - id: 文件传输助手
+    name: 文件传输助手
+    type: self
+
+  - id: 网友塔顺菲
+    name: 网友塔顺菲
+    type: friend
+
+  - id: MC·agent课程群1群
+    name: MC·agent课程群1群
+    type: group
+
+# 管理员列表
+# chat: 管理员所在的聊天名；"*" 表示在所有聊天中均有效
+admins:
+  - chat: "*"
+    admin_name: Ace Taffy
+
+# 黑名单（运行时 /ban 命令会追加到此处并自动保存）
+blacklist: []
+
+# ThrottledWeChat 随机延迟范围（秒），模拟人工操作节奏
+min_delay: 0.5
+max_delay: 2.0
+
+# GetListenMessage 轮询间隔（秒）
+poll_interval: 0.5
+
+# 本地聊天事实库
+data_manager:
+  enabled: true
+  database_path: data/messages.db
+  timezone: Asia/Shanghai
+  agent_names:
+    - Levi
+  reconciliation:
+    # 时间窗对账已实现，但默认关闭；启用前需配置真实微信数据库解析器
+    enabled: false
+    interval_seconds: 600
+    overlap_seconds: 120
+    settle_delay_seconds: 30
+    time_tolerance_seconds: 5
+  pywxdump:
+    # Offline WeChat database parser. Disabled by default.
+    # 微信数据库离线解析器，默认关闭。
+    enabled: false
+    # WeChat account directory, for example:
+    # C:\Users\name\Documents\WeChat Files\wxid_xxx
+    wx_path: ""
+    # Relative paths are resolved from the plugin root.
+    # 相对路径以插件根目录为基准。
+    merge_path: data/pywxdump/merge_all.db
+    media_cache_path: data/pywxdump/media
+    page_size: 500
+    # The database key is read only from WX_AUTO_WECHAT_DB_KEY.
+    # 数据库密钥仅从环境变量 WX_AUTO_WECHAT_DB_KEY 读取。

@@ -1,0 +1,35 @@
+name: wx-auto          # plugin slug (kebab-case); must be unique
+label: WX Auto         # human-readable name shown in the UI
+kind: platform         # plugin kind — keep as "platform" for adapters
+version: 0.1.0
+description: WX auto messaging platform adapter for Hermes
+author: Ace Taffy
+
+# 无需 token/channel — 平台使能由 config.json 是否存在或 WX_AUTO_ENABLED 决定
+requires_env: []
+
+optional_env:
+  - name: WX_AUTO_ENABLED
+    description: "设为 'true' 启用适配器（config.json 存在时自动启用）"
+    password: false
+
+  - name: WX_AUTO_ADMIN_TOTP_SECRET
+    description: "管理员 TOTP 共享密钥（Base32），覆写 config.json 中的值"
+    prompt: "TOTP 密钥"
+    password: true
+
+  - name: WX_AUTO_CONFIG_PATH
+    description: "config.json 自定义路径（默认为插件目录下的 config.json）"
+    password: false
+
+  - name: WX_AUTO_HOME_CHANNEL
+    description: "定时任务（cron）消息默认投递的聊天名"
+    password: false
+
+  - name: WX_AUTO_ALLOWED_USERS
+    description: "逗号分隔的允许与 agent 对话的用户显示名列表"
+    password: false
+
+  - name: WX_AUTO_ALLOW_ALL_USERS
+    description: "设为 'true' 允许所有用户与 agent 对话（配合插件自身过滤器使用）"
+    password: false
