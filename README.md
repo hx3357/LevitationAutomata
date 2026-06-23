@@ -1,4 +1,6 @@
-# Levitation Automata
+# Levitation Automata（wx-auto-platform模块）
+
+> 本仓库仅为Levitation Automata的wx-auto-platform部分。
 
 **Levitation Automata** 是一个面向群聊场景的拟真人 Agent 框架。它的目标不是构建一个随叫随到的群聊助手，而是模拟一个拥有“灵魂”、记忆、兴趣、欲望和自我连续性的虚拟个体：它会旁观、沉默、被话题吸引、对熟悉的人产生不同反应，也会在合适的时候主动参与对话或发起话题。它不是为了完成用户任务而存在，而是作为群聊中的一个社会性角色持续生活。✨
 
@@ -15,7 +17,7 @@ Levitation Automata 采用六层心智架构：
 
 ## wx-auto-platform
 
-对于Levi的开发框架和数据层，使用基于hermes agent的wx-auto-platform来实现并扩展功能。**本仓库仅为项目的wx-auto-platform部分。**未来考虑放弃hermes，自行开发harness agent loop作为慢agent行动路径。
+对于Levi的开发框架和数据层，使用基于hermes agent的wx-auto-platform来实现并扩展功能。未来考虑放弃hermes，自行开发harness agent loop作为慢agent行动路径。
 
 `wx-auto-platform` 是一个仅支持 Windows 的 [Hermes](https://github.com/NousResearch/hermes-agent) 平台插件。它通过 WeChat Desktop 的 COM/UIAutomation 接口，把微信私聊和群聊接入 Hermes Agent，同时提供消息过滤、管理员命令、文件发送、本地聊天事实库和历史消息查询能力。
 
