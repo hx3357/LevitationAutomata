@@ -1,6 +1,6 @@
-# Levitation Automata（wx-auto-platform模块）
+# Levitation Automata
 
-> 本仓库仅为Levitation Automata的wx-auto-platform部分。
+> 本仓库目前为Levitation Automata的前身——wx-auto-platform，人格化功能仍在开发。
 
 **Levitation Automata** 是一个面向群聊场景的拟真人 Agent 框架。它的目标不是构建一个随叫随到的群聊助手，而是模拟一个拥有“灵魂”、记忆、兴趣、欲望和自我连续性的虚拟个体：它会旁观、沉默、被话题吸引、对熟悉的人产生不同反应，也会在合适的时候主动参与对话或发起话题。它不是为了完成用户任务而存在，而是作为群聊中的一个社会性角色持续生活。✨
 
