@@ -8,12 +8,12 @@
 
 Levitation Automata 采用六层心智架构：
 
-**Data Layer** 记录群聊中客观发生的消息、引用、时间、说话者和线程信息。
-**Memory Layer** 保存 Agent 经历过的事件、自我历史、用户画像、关系网络和群体记忆。
-**Thought Layer** 负责感知、理解、反思和规划，将原始事件转化为 Agent 的内部想法。
-**Persona Layer** 定义 Agent 通常是什么样的人，包括 soul prompt、性格、兴趣、价值观、表达风格和长期欲望。
-**Desire Layer** 表示 Agent 此刻被什么牵引，例如兴趣、社交回应、被关注感、未完成计划或表达冲动。
-**Action Layer** 根据当前心智状态决定沉默、回复、主动发起话题或进入hermes agent loop。
+- **Data Layer** 记录群聊中客观发生的消息、引用、时间、说话者和线程信息。
+- **Memory Layer** 保存 Agent 经历过的事件、自我历史、用户画像、关系网络和群体记忆。
+- **Thought Layer** 负责感知、理解、反思和规划，将原始事件转化为 Agent 的内部想法。
+- **Persona Layer** 定义 Agent 通常是什么样的人，包括 soul prompt、性格、兴趣、价值观、表达风格和长期欲望。
+- **Desire Layer** 表示 Agent 此刻被什么牵引，例如兴趣、社交回应、被关注感、未完成计划或表达冲动。
+- **Action Layer** 根据当前心智状态决定沉默、回复、主动发起话题或进入hermes agent loop。
 
 ## wx-auto-platform
 
